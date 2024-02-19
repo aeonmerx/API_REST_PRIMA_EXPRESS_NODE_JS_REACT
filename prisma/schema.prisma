@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Word {
+  id            Int      @id @default(autoincrement())
+  word          String
+  translation   EnglishTranslation @relation(fields: [translationId], references: [id])
+  translationId Int
+}
+
+model EnglishTranslation {
+  id   Int    @id @default(autoincrement())
+  word String
+  Word Word[]
+}
